@@ -30,4 +30,22 @@ export class VehicleEffects {
       )
     )
   );
+
+  GetMakeVehicles$: Observable<Action> = createEffect(() =>
+    this.action$.pipe(
+      ofType(VehicleActions.LOAD_MAKE),
+      mergeMap((action) =>
+        this._tireFitmentService.getMake('').pipe(
+          map((data: any) => {
+            console.log('success', data);
+            return new VehicleActions.LoadMakeSuccess(data);
+          }),
+          catchError((error: Error) => {
+            console.log('error');
+            return of(new VehicleActions.LoadMakeFail(error));
+          })
+        )
+      )
+    )
+  );
 }

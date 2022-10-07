@@ -6,12 +6,12 @@ import { StoreModule } from '@ngrx/store';
 import { FitmentContainerComponent } from './fitment-container/fitment-container.component';
 import { EffectsModule } from '@ngrx/effects';
 import { VehicleEffects } from './store/effects/vehicle.effects';
-import { reducer } from './store/reducers/vehicle.reducer';
+import { reducers } from './store/reducers/vehicle.reducer';
 
 @NgModule({
   imports: [
     CommonModule,
-    StoreModule.forFeature('vehicle', reducer),
+    StoreModule.forFeature('vehicle', reducers),
     EffectsModule.forFeature([VehicleEffects]),
   ],
   declarations: [FitmentContainerComponent],

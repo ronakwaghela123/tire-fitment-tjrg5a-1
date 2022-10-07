@@ -20,10 +20,16 @@ export class FitmentContainerComponent implements OnInit {
   private _tire_fitment_subscription: Subscription = new Subscription();
   constructor(
     private _tireFitmentService: TireFitmentService,
-    private store: Store<{ vehicle: any }>
+    private store: Store<any>
   ) {
-    store.select('vehicle').subscribe((data) => console.log('main', data));
-    console.log(this.todo$);
+    store.select('vehicle').subscribe((data) => {
+      if (
+        data.yearReducer.success == true &&
+        data.yearReducer.year.length > 0
+      ) {
+        this.yearList = data.yearReducer.year;
+      }
+    });
   }
 
   ngOnInit() {
@@ -33,28 +39,22 @@ export class FitmentContainerComponent implements OnInit {
   public getYears() {
     console.log('innnnn');
     this.store.dispatch(new fromVehicle.LoadYears());
-    // this._tire_fitment_subscription.add(
-    //   this._tireFitmentService.getYears().subscribe((response: any) => {
-    //     if (response.success === true && response.year.length > 0) {
-    //       this.yearList = response.year;
-    //     }
-    //   })
-    // );
   }
 
   public getMake(data) {
     let requestParam = {
       year: data,
     };
-    this._tire_fitment_subscription.add(
-      this._tireFitmentService
-        .getMake(requestParam)
-        .subscribe((response: any) => {
-          if (response.success === true && response.make.length > 0) {
-            this.makeList = response.make;
-          }
-        })
-    );
+    this.store.dispatch(new fromVehicle.LoadMake());
+    this.store.select('vehicle').subscribe((data) => {
+      console.log(data);
+      if (
+        data.makeReducer.success == true &&
+        data.makeReducer.make.length > 0
+      ) {
+        this.makeList = data.makeReducer.make;
+      }
+    });
   }
   public getModels(data) {
     let requestParam = {

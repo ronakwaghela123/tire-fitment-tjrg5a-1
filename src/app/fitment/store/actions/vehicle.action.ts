@@ -1,12 +1,17 @@
 import { Action, createAction, props } from '@ngrx/store';
 // import model/interface from db.json here...
 
-// Action constants
+// Year Action constants
 export const LOAD_YEARS = '[Fitment] Load Years';
 export const LOAD_YEARS_FAIL = '[Fitment] Load Years Fail';
 export const LOAD_YEARS_SUCCESS = '[Fitment] Load Years Success';
 
-// Action creators
+// Make Action constants
+export const LOAD_MAKE = '[Fitment] Load Make';
+export const LOAD_MAKE_FAIL = '[Fitment] Load Make Fail';
+export const LOAD_MAKE_SUCCESS = '[Fitment] Load Make Success';
+
+// Year Action creators
 export class LoadYears implements Action {
   readonly type = LOAD_YEARS;
 }
@@ -19,17 +24,20 @@ export class LoadYearsSuccess implements Action {
   constructor(public payload: any) {} // Replace 'any' with interface
 }
 
-// export const GetYearAction = createAction('[Fitment] Load Years');
-
-// export const SuccessGetYearAction = createAction(
-//   '[Fitment] Load Years Success',
-//   props<{ payload: any }>()
-// );
-
-// export const ErrorYearAction = createAction(
-//   '[Fitment] Load Years Fail',
-//   props<Error>()
-// );
+// Make Action creators
+export class LoadMake implements Action {
+  readonly type = LOAD_MAKE;
+}
+export class LoadMakeFail implements Action {
+  readonly type = LOAD_MAKE_FAIL;
+  constructor(public payload: any) {}
+}
+export class LoadMakeSuccess implements Action {
+  readonly type = LOAD_MAKE_SUCCESS;
+  constructor(public payload: any) {} // Replace 'any' with interface
+}
 
 // Action types
-export type VehicleAction = LoadYears | LoadYearsFail | LoadYearsSuccess;
+export type VehicleYearAction = LoadYears | LoadYearsFail | LoadYearsSuccess;
+
+export type VehicleMakeAction = LoadMake | LoadMakeFail | LoadMakeSuccess;
