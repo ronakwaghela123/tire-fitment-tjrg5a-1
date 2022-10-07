@@ -1,0 +1,203 @@
+<section class="tire-fitment">
+  <div class="tire-fitment__content text-center">
+    <h1 class="tire-fitment__title">Tire fitment engine</h1>
+    <button
+      class="btn btn-primary tire-fitment__btn mt-2"
+      data-bs-toggle="modal"
+      data-bs-target="#tireFitmentModal"
+    >
+      Select vehicle
+    </button>
+  </div>
+</section>
+
+<div
+  class="modal fade"
+  id="tireFitmentModal"
+  tabindex="-1"
+  aria-labelledby="tireFitmentModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tireFitmentModalLabel">Tire Fitment</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-pills" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="year-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#year-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="year-tab-pane"
+              aria-selected="true"
+              [disabled]="isTabActive !== 'year'"
+              [ngClass]="{ active: isTabActive === 'year' }"
+              (click)="getYears()"
+            >
+              Year
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="make-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#make-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="make-tab-pane"
+              aria-selected="false"
+              [disabled]="isTabActive !== 'make'"
+              [ngClass]="{ active: isTabActive === 'make' }"
+            >
+              Make
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="model-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#model-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="model-tab-pane"
+              aria-selected="false"
+              [disabled]="isTabActive !== 'models'"
+              [ngClass]="{ active: isTabActive === 'models' }"
+            >
+              Model
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="trim-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#trim-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="trim-tab-pane"
+              aria-selected="false"
+              [disabled]="isTabActive !== 'trim'"
+              [ngClass]="{ active: isTabActive === 'trim' }"
+            >
+              Trim
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content p-2" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="year-tab-pane"
+            role="tabpanel"
+            aria-labelledby="year-tab"
+            tabindex="0"
+            [ngClass]="{ 'show active': isTabActive === 'year' }"
+          >
+            <div class="row">
+              <div class="col-3" *ngFor="let year of yearList">
+                <h5
+                  (click)="onSelectFitment(year, 'year', 'make')"
+                  role="button"
+                  class="year-no"
+                >
+                  {{ year }}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="make-tab-pane"
+            role="tabpanel"
+            aria-labelledby="make-tab"
+            tabindex="0"
+            [ngClass]="{ 'show active': isTabActive === 'make' }"
+          >
+            <div class="row">
+              <div class="col-3" *ngFor="let make of makeList">
+                <h5
+                  (click)="onSelectFitment(make, 'make', 'models')"
+                  role="button"
+                  class="make-no"
+                >
+                  {{ make }}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="model-tab-pane"
+            role="tabpanel"
+            aria-labelledby="model-tab"
+            tabindex="0"
+            [ngClass]="{ 'show active': isTabActive === 'models' }"
+          >
+            <div class="row">
+              <div class="col-3" *ngFor="let models of modelsList">
+                <h5
+                  (click)="onSelectFitment(models, 'models', 'trim')"
+                  role="button"
+                  class="models-no"
+                >
+                  {{ models }}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="trim-tab-pane"
+            role="tabpanel"
+            aria-labelledby="trim-tab"
+            tabindex="0"
+            [ngClass]="{ 'show active': isTabActive === 'trim' }"
+          >
+            <div class="d-flex">
+              <h5
+                *ngFor="let selectedFitment of selectedFitmentData"
+                role="button"
+                class="trim-no me-2"
+              >
+                {{ selectedFitment }}
+              </h5>
+              <h5
+                *ngFor="let trim of trimList"
+                role="button"
+                class="trim-no me-2"
+              >
+                {{ trim }}
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="resetFitment()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="resetFitment()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
